@@ -1,0 +1,22 @@
+.main_profile{
+    background-image: url(https://static.vecteezy.com/system/resources/previews/003/529/010/original/concept-human-resources-recruitment-for-web-page-banner-presentation-social-media-documents-cards-posters-young-team-looking-for-employees-online-illustration-in-flat-style-vector.jpg);
+    background-size: contain;
+    height: 100vh;
+    width: 100vw;
+    
+}
+.tab {
+    width: 60vw;
+    margin: auto;
+    margin-top: 5vh;
+}
+.main_tab{
+    background-color: rgba(40, 158, 169, 0.6);
+    backdrop-filter: blur(4px);
+    width: 90vw;
+    height: 80vh;
+    margin: auto;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 20px;
+}

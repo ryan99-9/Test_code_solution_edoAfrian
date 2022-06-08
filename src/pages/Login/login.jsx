@@ -1,17 +1,17 @@
 import React from 'react'
 
-import { InputGroup, FormControl, Button, Modal } from 'react-bootstrap'
+import { InputGroup, FormControl, Button, Modal, Form } from 'react-bootstrap'
 import { Link, Navigate } from 'react-router-dom'
-import './Login.css'
+import './login.css'
 import { connect } from 'react-redux'
 import { login, errLoginfalse } from '../../redux/action/userAction'
+import Navi from '../../component/navbar'
 
-class LoginPage extends React.Component {
+class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            visibility: false,
-            error: false,
+            navigate: false,
         }
     }
     onLogin = () => {
@@ -21,84 +21,49 @@ class LoginPage extends React.Component {
 
         //Kalau ada input yang masih kosong, dikasih notif jika tidak boleh ada yang kosong
         if (!username || !password) {
-            return this.setState({ error: true })
+            return alert ('username dan password kosong')
+           
+        } else if (username !== password) {
+            return  alert('Username berbeda dengan password')
         }
         //Cek apakah data username dan password yang di input user/diambil sudah ada didatabase 
-        this.props.login(username, password)
-        
-
+        this.props.login(username)
     }
     render() {
-        // console.log(this.props.dataUser)
-        if (this.props.userName) {
-            return <Navigate to="/" />
+        console.log(this.props.name);
+        // console.log(this.state.navigate);
+        if (this.props.name) {
+            return <Navigate to="/Dashboard" />
         }
-        const { visibility } = this.state
         return (
-            <div className='bg'>
-                <div className='contForm'>
-                    <h1 className='textHello'>HELLO</h1>
-                    <label className='textLabel'>Username</label>
-                    <InputGroup className="mb-3">
-                        <InputGroup.Text id="basic-addon1">
-                            <div className='usernameIcon'>@</div>
-                        </InputGroup.Text>
-                        <FormControl
-                            placeholder="Input Here"
-                            ref="username"
-                        />
-                    </InputGroup>
-                    <label className='textLabel'>Password</label>
-                    <InputGroup className="mb-3">
-                        <InputGroup.Text id="basic-addon1" onClick={() => this.setState({ visibility: !visibility })}>
-                            {visibility ?
-                                <i class="fas fa-eye"></i> : <i class="fas fa-eye-slash"></i>
-                            }
-
-                        </InputGroup.Text>
-                        <FormControl
-                            placeholder="Input Here"
-                            ref="password"
-                            type={visibility ? "text" : "password"}
-                        />
-                    </InputGroup>
-                    <Button onClick={this.onLogin} className='loginButton'>Login in</Button>
-                    <p className='textHaveAccount'>Do you have an account?
-                        <Link to="/Register" className='textRegister'> Register
-                        </Link></p>
-                    <Modal show={this.state.error}>
-                        <Modal.Header>
-                            <Modal.Title>Error</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <p>Input your data before Login Please!</p>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={() => this.setState({ error: false })} variant="secondary">Close</Button>
-                        </Modal.Footer>
-                    </Modal>
-                    <Modal show={this.props.errorLogin}>
-                        <Modal.Header>
-                            <Modal.Title>Your login is failed</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <p>This account doesn't exist!</p>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={this.props.errLoginfalse} variant="secondary">Close</Button>
-                        </Modal.Footer>
-                    </Modal>
+            <div>
+                <Navi />
+                <div className='main_login'>
+                    <div className='branch1'>
+                    </div>
+                    <div className='branch2'>
+                        <br /><br /><br /><br /><p className='page'>LOGIN PAGE</p>
+                        <Form>
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                <Form.Label>Username</Form.Label><br />
+                                <Form.Control type="text" placeholder="input here" ref='username' />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                <Form.Label>Password</Form.Label><br />
+                                <Form.Control type="text" placeholder="input here" ref='password' />
+                            </Form.Group>
+                            <Button variant="secondary" onClick={this.onLogin}>LOGIN</Button>
+                        </Form>
+                    </div>
                 </div>
             </div>
         )
     }
 }
-
-const mapStateToProps = (take) => {
+const mapStateToProps = (state) => {
     return {
-        errorLogin: take.userReducer.errorLogin,
-        dataUser: take.userReducer,
-        userName: take.userReducer.username
+        name: state.userReducer.name,
     }
 }
-export default connect(mapStateToProps, { login, errLoginfalse })(LoginPage)
+
+export default connect(mapStateToProps, { login, errLoginfalse })(Login)

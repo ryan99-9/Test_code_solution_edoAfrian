@@ -1,15 +1,9 @@
 const INITIAL_STATE = {
     id: null,
     username: "",
-    password: "",
-    role: "",
-    cart:[],
-    errorLogin: false,
-    suksesRegist: false,
-    errorRegist: false,
-}
-if(!INITIAL_STATE.id == null){
-  console.log(INITIAL_STATE)  
+    name: "",
+    email : "",
+    phone : "",
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -19,38 +13,10 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 id: action.payload.id,
                 username: action.payload.username,
-                password: action.payload.password,
-                role: action.payload.role,
-                cart: action.payload.cart
+                name: action.payload.name,
+                email : action.payload.email,
+                phone : action.payload.phone,
             }
-        case 'ERROR_LOGIN':
-            
-            return {
-                ...state,
-                errorLogin: true
-            }
-        case 'ERROR_LOGIN_FALSE':
-            return {
-                ...state,
-                errorLogin: false
-            }
-        case 'LOG_OUT':
-            return INITIAL_STATE
-        case 'SUCCESS_REGIST':
-            return {
-                ...state,
-                suksesRegist: true
-            }
-        case 'USERNAME_EMAIL_EXIST':
-            return {
-                ...state,
-                errorRegist: true
-            }
-            case 'CART':
-                return {
-                    ...state,
-                    cart:action.payload.cart
-                }
         default:
             return state
     } 
